@@ -1,0 +1,161 @@
+# GitHub Discussions Configuration for Picovis Community
+# This file documents our discussion setup and best practices
+
+categories:
+  announcements:
+    name: "📣 Announcements"
+    description: "Official Picovis updates, releases, and important community news"
+    format: "announcement"
+    emoji: "📣"
+    
+  general:
+    name: "💬 General"
+    description: "General discussions about database analytics, AI, and community topics"
+    format: "open-ended"
+    emoji: "💬"
+    
+  q-a:
+    name: "🙏 Q&A"
+    description: "Technical support, troubleshooting, and how-to questions"
+    format: "question-answer"
+    emoji: "🙏"
+    
+  ideas:
+    name: "💡 Ideas"
+    description: "Feature requests, suggestions, and product improvement ideas"
+    format: "open-ended"
+    emoji: "💡"
+    
+  show-and-tell:
+    name: "🙌 Show and Tell"
+    description: "Project showcases, success stories, tutorials, and community resources"
+    format: "open-ended"
+    emoji: "🙌"
+    
+  polls:
+    name: "🗳️ Polls"
+    description: "Community polls for feedback and decision making"
+    format: "poll"
+    emoji: "🗳️"
+
+# Pinned discussions to create
+pinned_discussions:
+  - title: "🎉 Welcome to Picovis Community Discussions!"
+    category: "announcements"
+    content_file: "docs/discussion-starters/welcome-discussion.md"
+    
+  - title: "🌟 Share Your Picovis Success Stories & Use Cases!"
+    category: "show-and-tell"
+    content_file: "docs/discussion-starters/showcase-examples.md"
+    
+  - title: "🗺️ Help Shape the Future of Picovis - Roadmap Discussion"
+    category: "ideas"
+    content_file: "docs/discussion-starters/roadmap-feedback.md"
+
+# Labels for better organization
+labels:
+  # Priority labels
+  - name: "priority: high"
+    color: "d73a4a"
+    description: "High priority items"
+    
+  - name: "priority: medium"
+    color: "fbca04"
+    description: "Medium priority items"
+    
+  - name: "priority: low"
+    color: "0e8a16"
+    description: "Low priority items"
+    
+  # Type labels
+  - name: "type: bug"
+    color: "d73a4a"
+    description: "Bug reports and issues"
+    
+  - name: "type: enhancement"
+    color: "a2eeef"
+    description: "Feature requests and improvements"
+    
+  - name: "type: question"
+    color: "d876e3"
+    description: "Questions and help requests"
+    
+  - name: "type: documentation"
+    color: "0075ca"
+    description: "Documentation related"
+    
+  # Database labels
+  - name: "database: postgresql"
+    color: "336791"
+    description: "PostgreSQL related"
+    
+  - name: "database: mysql"
+    color: "4479a1"
+    description: "MySQL/MariaDB related"
+    
+  - name: "database: mongodb"
+    color: "47a248"
+    description: "MongoDB related"
+    
+  - name: "database: sqlite"
+    color: "003b57"
+    description: "SQLite related"
+    
+  - name: "database: sqlserver"
+    color: "cc2927"
+    description: "SQL Server related"
+    
+  # Feature area labels
+  - name: "area: ai-analytics"
+    color: "ff6b6b"
+    description: "AI and analytics features"
+    
+  - name: "area: performance"
+    color: "4ecdc4"
+    description: "Performance related"
+    
+  - name: "area: cli"
+    color: "45b7d1"
+    description: "Command line interface"
+    
+  - name: "area: installation"
+    color: "96ceb4"
+    description: "Installation and setup"
+    
+  # Status labels
+  - name: "status: needs-triage"
+    color: "fef2c0"
+    description: "Needs initial review"
+    
+  - name: "status: investigating"
+    color: "fbca04"
+    description: "Under investigation"
+    
+  - name: "status: planned"
+    color: "0e8a16"
+    description: "Planned for future release"
+    
+  - name: "status: help-wanted"
+    color: "159818"
+    description: "Community help wanted"
+
+# Community management guidelines
+moderation:
+  auto_lock_resolved: true
+  auto_lock_days: 30
+  require_templates: true
+  welcome_new_users: true
+  
+# Templates to create
+templates:
+  - name: "Bug Report"
+    file: ".github/DISCUSSION_TEMPLATE/bug-report.yml"
+    
+  - name: "Feature Request"
+    file: ".github/DISCUSSION_TEMPLATE/feature-request.yml"
+    
+  - name: "Help & Support"
+    file: ".github/DISCUSSION_TEMPLATE/help-question.yml"
+    
+  - name: "Show and Tell"
+    file: ".github/DISCUSSION_TEMPLATE/showcase.yml"

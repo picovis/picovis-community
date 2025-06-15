@@ -1,0 +1,102 @@
+name: 🙏 Help & Support
+description: Get help with using Picovis CLI
+title: "[Help]: "
+labels: ["question", "help-wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help with Picovis CLI? We're here to assist! Please provide as much detail as possible.
+        
+        **Before asking for help**, please:
+        - [ ] Check our [documentation](https://github.com/picovis/picovis-community/wiki)
+        - [ ] Search existing discussions for similar questions
+        - [ ] Try the troubleshooting steps in our [guide](https://github.com/picovis/picovis-community/wiki/Troubleshooting)
+
+  - type: input
+    id: version
+    attributes:
+      label: Picovis CLI Version
+      description: What version are you using?
+      placeholder: "e.g., 1.2.3 (run `picovis --version`)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Help Category
+      description: What do you need help with?
+      options:
+        - Installation & Setup
+        - Database Connection
+        - AI Analytics Features
+        - Query Writing & Execution
+        - Data Export/Import
+        - Performance Issues
+        - Configuration
+        - Error Understanding
+        - Best Practices
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What specifically do you need help with?
+      placeholder: "I'm trying to... but I'm getting..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & Environment
+      description: Provide context about your setup and what you're trying to achieve
+      placeholder: |
+        - Operating System: 
+        - Database Type: 
+        - What I'm trying to do: 
+        - What I've already tried:
+    validations:
+      required: true
+
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands Used
+      description: What commands did you run? (remove sensitive information)
+      render: shell
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error Messages
+      description: If you're getting errors, paste them here
+      render: shell
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Outcome
+      description: What did you expect to happen?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: urgency
+    attributes:
+      label: Urgency Level
+      description: How urgent is this for you?
+      options:
+        - label: Low - I can work around this
+        - label: Medium - This is blocking some of my work
+        - label: High - This is blocking critical work
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Any other details that might help us assist you better

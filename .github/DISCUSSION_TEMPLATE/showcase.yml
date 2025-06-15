@@ -1,0 +1,111 @@
+name: 🙌 Show and Tell
+description: Share your Picovis CLI projects, use cases, or success stories
+title: "[Showcase]: "
+labels: ["showcase", "community"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We love seeing how you use Picovis CLI! Share your projects, interesting use cases, or success stories with the community.
+        
+        **Guidelines for sharing:**
+        - Remove any sensitive data or credentials
+        - Focus on the interesting technical aspects
+        - Include screenshots or examples where helpful
+        - Be respectful of others' work and ideas
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Showcase Category
+      description: What are you sharing?
+      options:
+        - Data Analysis Project
+        - Database Migration Success
+        - Performance Optimization
+        - AI Insights Discovery
+        - Automation Workflow
+        - Integration with Other Tools
+        - Educational Content
+        - Community Resource
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Project/Use Case Title
+      description: Give your showcase a descriptive title
+      placeholder: "e.g., 'Automated Database Health Monitoring with Picovis'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe what you built or accomplished
+      placeholder: "Tell us about your project, what problem it solves, and how Picovis helped..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-details
+    attributes:
+      label: Technical Details
+      description: Share technical implementation details, commands used, or configurations
+      placeholder: |
+        - Database types used:
+        - Key Picovis features utilized:
+        - Commands or workflows:
+        - Challenges overcome:
+
+  - type: textarea
+    id: results
+    attributes:
+      label: Results & Impact
+      description: What were the outcomes? Any metrics or improvements?
+      placeholder: |
+        - Performance improvements:
+        - Time saved:
+        - Insights discovered:
+        - Business impact:
+
+  - type: textarea
+    id: lessons
+    attributes:
+      label: Lessons Learned
+      description: What did you learn? Any tips for others?
+      placeholder: "Key takeaways, best practices, or advice for others attempting similar projects..."
+
+  - type: textarea
+    id: code-snippets
+    attributes:
+      label: Code Examples
+      description: Share relevant code snippets, queries, or configurations (remove sensitive data)
+      render: shell
+
+  - type: input
+    id: links
+    attributes:
+      label: Links
+      description: Any relevant links (GitHub repos, blog posts, etc.)
+      placeholder: "https://github.com/username/project"
+
+  - type: checkboxes
+    id: sharing
+    attributes:
+      label: Sharing Permissions
+      description: How can the community use your contribution?
+      options:
+        - label: Others can reference this in their own projects
+        - label: This can be featured in Picovis documentation or blog posts
+        - label: I'm open to collaboration on this project
+        - label: I'm available to answer questions about this project
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Anything else you'd like to share?
