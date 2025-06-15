@@ -18,6 +18,7 @@
 #   --help               Show this help message
 #
 # Copyright (c) 2024 Picovis. All rights reserved.
+# This software is proprietary and confidential.
 
 set -euo pipefail
 

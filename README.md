@@ -129,6 +129,12 @@ See our [releases page](https://github.com/picovis/picovis-community/releases) f
 - **Community Help**: [GitHub Discussions](https://github.com/picovis/picovis-community/discussions)
 - **Feature Requests**: [GitHub Issues](https://github.com/picovis/picovis-community/issues/new?template=feature_request.md)
 
+## 📄 License
+
+This software is proprietary and confidential. All rights reserved.
+
+Copyright (c) 2024 Picovis. Unauthorized copying, distribution, or use is strictly prohibited.
+
 ---
 
 **Note**: This is the public releases and community repository. Source code is maintained in a separate private repository.
