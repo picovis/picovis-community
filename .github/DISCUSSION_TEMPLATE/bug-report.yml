@@ -1,0 +1,111 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with Picovis CLI
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out this form as completely as possible.
+        
+        **Before submitting**, please check:
+        - [ ] Search existing discussions to avoid duplicates
+        - [ ] Check our [troubleshooting guide](https://github.com/picovis/picovis-community/wiki/Troubleshooting)
+        - [ ] Ensure you're using the latest version of Picovis CLI
+
+  - type: input
+    id: version
+    attributes:
+      label: Picovis CLI Version
+      description: What version of Picovis CLI are you running?
+      placeholder: "e.g., 1.2.3 (run `picovis --version`)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Other (please specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: database
+    attributes:
+      label: Database Type
+      description: Which database are you connecting to?
+      options:
+        - PostgreSQL
+        - MySQL/MariaDB
+        - MongoDB
+        - SQLite
+        - Microsoft SQL Server
+        - Oracle Database
+        - Other (please specify)
+        - Not applicable
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe what happened and what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Run command '...'
+        2. Connect to database '...'
+        3. Execute query '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Include any error messages.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: If applicable, add any error logs or output
+      render: shell
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration
+      description: Share relevant configuration (remove sensitive information)
+      render: yaml
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here.

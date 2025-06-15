@@ -110,13 +110,27 @@ Found a bug or have a feature request? Please [open an issue](https://github.com
 
 ## 💬 Community & Discussions
 
-Join our community discussions for:
-- Questions and help
-- Feature requests
-- General feedback
-- Tips and tricks
+Join our vibrant community of database professionals and AI enthusiasts! Our discussions are the heart of the Picovis community.
 
-[Start a discussion](https://github.com/picovis/picovis-community/discussions)
+### 🗣️ Discussion Categories
+
+| Category | Purpose | When to Use |
+|----------|---------|-------------|
+| [📣 Announcements](https://github.com/picovis/picovis-community/discussions/categories/announcements) | Official updates & releases | Stay informed about new features |
+| [🙏 Q&A](https://github.com/picovis/picovis-community/discussions/categories/q-a) | Technical support & help | Get help with installation, configuration, or usage |
+| [💡 Ideas](https://github.com/picovis/picovis-community/discussions/categories/ideas) | Feature requests & suggestions | Share ideas for improvements or new features |
+| [🙌 Show and Tell](https://github.com/picovis/picovis-community/discussions/categories/show-and-tell) | Project showcases & success stories | Share your projects and inspire others |
+| [💬 General](https://github.com/picovis/picovis-community/discussions/categories/general) | Open discussions | General topics about databases, AI, or community |
+| [🗳️ Polls](https://github.com/picovis/picovis-community/discussions/categories/polls) | Community feedback | Participate in feature prioritization |
+
+### 🚀 Quick Links
+- **New to Picovis?** Start with our [Welcome Discussion](https://github.com/picovis/picovis-community/discussions)
+- **Need Help?** Check [Q&A](https://github.com/picovis/picovis-community/discussions/categories/q-a) or ask a new question
+- **Have an Idea?** Share it in [Ideas](https://github.com/picovis/picovis-community/discussions/categories/ideas)
+- **Built Something Cool?** Show it off in [Show and Tell](https://github.com/picovis/picovis-community/discussions/categories/show-and-tell)
+
+### 📋 Community Guidelines
+Please read our [Community Guidelines](COMMUNITY_GUIDELINES.md) to ensure a welcoming and productive environment for everyone.
 
 ## 🔄 Release Notes
 
@@ -124,10 +138,25 @@ See our [releases page](https://github.com/picovis/picovis-community/releases) f
 
 ## 🆘 Support
 
-- **Documentation**: This repository and our [wiki](https://github.com/picovis/picovis-community/wiki)
-- **Bug Reports**: [GitHub Issues](https://github.com/picovis/picovis-community/issues)
-- **Community Help**: [GitHub Discussions](https://github.com/picovis/picovis-community/discussions)
-- **Feature Requests**: [GitHub Issues](https://github.com/picovis/picovis-community/issues/new?template=feature_request.md)
+### 📚 **Documentation & Resources**
+- **Installation Guide**: [Getting Started](https://github.com/picovis/picovis-community#-installation)
+- **User Manual**: [Wiki Documentation](https://github.com/picovis/picovis-community/wiki)
+- **Troubleshooting**: [Common Issues & Solutions](https://github.com/picovis/picovis-community/wiki/Troubleshooting)
+
+### 🐛 **Issues & Bugs**
+- **Bug Reports**: [Create an Issue](https://github.com/picovis/picovis-community/issues/new/choose)
+- **Security Issues**: Report privately via GitHub Security Advisories
+
+### 💬 **Community Support**
+- **Questions & Help**: [Q&A Discussions](https://github.com/picovis/picovis-community/discussions/categories/q-a)
+- **Feature Requests**: [Ideas Discussions](https://github.com/picovis/picovis-community/discussions/categories/ideas)
+- **General Discussion**: [Community Discussions](https://github.com/picovis/picovis-community/discussions)
+
+### ⚡ **Quick Help**
+Before asking for help, please:
+1. Check our [troubleshooting guide](https://github.com/picovis/picovis-community/wiki/Troubleshooting)
+2. Search [existing discussions](https://github.com/picovis/picovis-community/discussions)
+3. Include your Picovis version (`picovis --version`) when reporting issues
 
 ## 📄 License
 

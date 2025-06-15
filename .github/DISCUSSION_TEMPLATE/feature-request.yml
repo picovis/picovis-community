@@ -1,0 +1,100 @@
+name: 💡 Feature Request
+description: Suggest a new feature or enhancement for Picovis CLI
+title: "[Feature]: "
+labels: ["enhancement", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! We appreciate your input in making Picovis better.
+        
+        **Before submitting**, please:
+        - [ ] Search existing discussions to avoid duplicates
+        - [ ] Check our [roadmap](https://github.com/picovis/picovis-community/discussions/categories/announcements) for planned features
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What category does this feature belong to?
+      options:
+        - AI/Analytics Enhancement
+        - Database Connectivity
+        - Performance Improvement
+        - User Interface/Experience
+        - Data Export/Import
+        - Security
+        - Documentation
+        - Developer Experience
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What's the current limitation?
+      placeholder: "As a [user type], I want [goal] so that [benefit]."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution in detail.
+      placeholder: "I would like to see..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative solutions or workarounds?
+    validations:
+      required: false
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Provide specific use cases where this feature would be valuable.
+      placeholder: |
+        1. When analyzing large datasets...
+        2. When connecting to multiple databases...
+        3. When generating reports...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve my workflow
+        - High - Critical for my use case
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Considerations
+      description: Check any that apply to your feature request
+      options:
+        - label: This feature should work across all supported databases
+        - label: This feature requires new AI/ML capabilities
+        - label: This feature affects the CLI interface
+        - label: This feature requires new configuration options
+        - label: This feature impacts performance considerations
+        - label: This feature needs documentation updates
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, mockups, or examples about the feature request here.
