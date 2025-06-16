@@ -50,15 +50,15 @@ DOWNLOAD_URL=""
 
 # 🎯 Logging functions
 log_info() {
-    echo -e "${BLUE}ℹ️  ${1}${NC}"
+    echo -e "${BLUE}ℹ️  ${1}${NC}" >&2
 }
 
 log_success() {
-    echo -e "${GREEN}✅ ${1}${NC}"
+    echo -e "${GREEN}✅ ${1}${NC}" >&2
 }
 
 log_warning() {
-    echo -e "${YELLOW}⚠️  ${1}${NC}"
+    echo -e "${YELLOW}⚠️  ${1}${NC}" >&2
 }
 
 log_error() {
@@ -66,11 +66,11 @@ log_error() {
 }
 
 log_progress() {
-    echo -e "${PURPLE}🔄 ${1}${NC}"
+    echo -e "${PURPLE}🔄 ${1}${NC}" >&2
 }
 
 log_header() {
-    echo -e "${CYAN}${BOLD}🚀 $1${NC}"
+    echo -e "${CYAN}${BOLD}🚀 $1${NC}" >&2
 }
 
 # 🆘 Help function
@@ -153,7 +153,7 @@ detect_platform() {
         ;;
     esac
 
-    BINARY_FILENAME="picovis-${DETECTED_OS}-${DETECTED_ARCH}"
+    # Note: Binary filename will be set in get_download_url() after version is determined
     log_success "Detected platform: ${DETECTED_OS}-${DETECTED_ARCH}"
 }
 
@@ -176,6 +176,8 @@ get_download_url() {
         log_success "Latest version: $INSTALL_VERSION"
     fi
 
+    # Construct binary filename with version suffix to match actual asset names
+    BINARY_FILENAME="picovis-${DETECTED_OS}-${DETECTED_ARCH}-${INSTALL_VERSION}"
     DOWNLOAD_URL="https://github.com/${GITHUB_REPO}/releases/download/${INSTALL_VERSION}/${BINARY_FILENAME}"
     log_success "Download URL: $DOWNLOAD_URL"
 }
@@ -242,7 +244,7 @@ install_binary() {
         log_info "Use --force to reinstall or uninstall first"
 
         # Ask user if they want to continue
-        echo -n "Do you want to continue with installation? [y/N]: "
+        echo -n "Do you want to continue with installation? [y/N]: " >&2
         read -r response
         if [[ ! "$response" =~ ^[Yy]$ ]]; then
             log_info "Installation cancelled"
@@ -304,7 +306,7 @@ check_path() {
     if [[ ":$PATH:" != *":$install_dir:"* ]]; then
         log_warning "Install directory is not in your PATH: $install_dir"
         log_info "Add the following line to your shell profile (~/.bashrc, ~/.zshrc, etc.):"
-        echo -e "${WHITE}export PATH=\"$install_dir:\$PATH\"${NC}"
+        echo -e "${WHITE}export PATH=\"$install_dir:\$PATH\"${NC}" >&2
         log_info "Then restart your terminal or run: source ~/.bashrc"
     else
         log_success "Install directory is already in your PATH"
@@ -354,7 +356,7 @@ main() {
 
     # Show header
     log_header "Picovis CLI Installation"
-    echo
+    echo >&2
 
     # Parse arguments
     parse_args "$@"
@@ -368,7 +370,7 @@ main() {
     # Show installation info
     log_info "Installation version: $INSTALL_VERSION"
     log_info "Installation prefix: $INSTALL_PREFIX"
-    echo
+    echo >&2
 
     # Run installation steps
     detect_platform
@@ -380,13 +382,13 @@ main() {
     check_path
 
     # Success message
-    echo
+    echo >&2
     log_header "Installation Complete! 🎉"
-    echo
+    echo >&2
     log_success "Picovis CLI has been successfully installed"
     log_info "Run 'picovis --help' to get started"
     log_info "Visit https://github.com/picovis/picovis-community for documentation"
-    echo
+    echo >&2
 }
 
 # Run main function if script is executed directly
