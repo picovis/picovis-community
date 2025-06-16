@@ -30,7 +30,7 @@ readonly BOLD='\033[1m'
 # 📊 Test configuration
 readonly SCRIPT_PATH="./install.sh"
 readonly TEST_PREFIX="/tmp/picovis-test-$$"
-readonly VERBOSE=${VERBOSE:-false}
+VERBOSE=${VERBOSE:-false}
 SPECIFIC_TEST=""
 
 # 📈 Test counters
