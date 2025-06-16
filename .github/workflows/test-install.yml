@@ -3,7 +3,7 @@ name: 🧪 Test Installation Script
 on:
   push:
     branches: [ main, develop ]
-    paths: 
+    paths:
       - 'install.sh'
       - 'test_install.sh'
       - '.github/workflows/test-install.yml'
@@ -108,9 +108,17 @@ jobs:
       - name: 🔧 Make scripts executable
         run: chmod +x install.sh test_install.sh
 
-      - name: 🧪 Test platform detection
+      - name: 🧪 Test platform detection (debug)
         run: |
-          ./install.sh --dry-run --verbose 2>&1 | grep -E "(linux|macos)-(x64|arm64)"
+          echo "=== Debug platform detection ==="
+          chmod +x debug_macos.sh
+          ./debug_macos.sh
+          echo "=== Full install script test ==="
+          ./install.sh --dry-run --verbose 2>&1 | grep -E "(linux|macos)-(x64|arm64)" || {
+            echo "=== Install script failed, showing first 50 lines of output ==="
+            ./install.sh --dry-run --verbose 2>&1 | head -50
+            exit 1
+          }
 
       - name: 🧪 Test dependency checking
         run: |
@@ -201,7 +209,7 @@ jobs:
           end_time=$(date +%s)
           execution_time=$((end_time - start_time))
           echo "Script execution time: ${execution_time}s"
-          
+
           # Fail if script takes more than 30 seconds
           if [[ $execution_time -gt 30 ]]; then
             echo "Script execution too slow: ${execution_time}s > 30s"
