@@ -108,17 +108,9 @@ jobs:
       - name: 🔧 Make scripts executable
         run: chmod +x install.sh test_install.sh
 
-      - name: 🧪 Test platform detection (debug)
+      - name: 🧪 Test platform detection
         run: |
-          echo "=== Debug platform detection ==="
-          chmod +x debug_macos.sh
-          ./debug_macos.sh
-          echo "=== Full install script test ==="
-          ./install.sh --dry-run --verbose 2>&1 | grep -E "(linux|macos)-(x64|arm64)" || {
-            echo "=== Install script failed, showing first 50 lines of output ==="
-            ./install.sh --dry-run --verbose 2>&1 | head -50
-            exit 1
-          }
+          ./install.sh --dry-run --verbose 2>&1 | grep -E "(linux|macos)-(x64|arm64)"
 
       - name: 🧪 Test dependency checking
         run: |
