@@ -84,32 +84,44 @@ INSTALLATION_ID=""
 # 🎯 Enhanced Logging functions
 log_info() {
     echo -e "${BLUE}ℹ️  ${1}${NC}" >&2
-    [[ "$VERBOSE" == true ]] && echo "[$(date '+%Y-%m-%d %H:%M:%S')] INFO: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    if [[ "$VERBOSE" == true ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] INFO: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    fi
 }
 
 log_success() {
     echo -e "${GREEN}✅ ${1}${NC}" >&2
-    [[ "$VERBOSE" == true ]] && echo "[$(date '+%Y-%m-%d %H:%M:%S')] SUCCESS: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    if [[ "$VERBOSE" == true ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] SUCCESS: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    fi
 }
 
 log_warning() {
     echo -e "${YELLOW}⚠️  ${1}${NC}" >&2
-    [[ "$VERBOSE" == true ]] && echo "[$(date '+%Y-%m-%d %H:%M:%S')] WARNING: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    if [[ "$VERBOSE" == true ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] WARNING: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    fi
 }
 
 log_error() {
     echo -e "${RED}❌ ${1}${NC}" >&2
-    [[ "$VERBOSE" == true ]] && echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    if [[ "$VERBOSE" == true ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    fi
 }
 
 log_progress() {
     echo -e "${PURPLE}🔄 ${1}${NC}" >&2
-    [[ "$VERBOSE" == true ]] && echo "[$(date '+%Y-%m-%d %H:%M:%S')] PROGRESS: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    if [[ "$VERBOSE" == true ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] PROGRESS: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    fi
 }
 
 log_header() {
     echo -e "${CYAN}${BOLD}🚀 $1${NC}" >&2
-    [[ "$VERBOSE" == true ]] && echo "[$(date '+%Y-%m-%d %H:%M:%S')] HEADER: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    if [[ "$VERBOSE" == true ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] HEADER: $1" >>"$TEMP_DIR/install.log" 2>/dev/null || true
+    fi
 }
 
 log_debug() {
@@ -396,8 +408,8 @@ version_compare() {
 
     # Simple version comparison (assumes semantic versioning)
     local IFS='.'
-    IFS=\'.\' read -ra ver1_parts <<< "$version1"
-    IFS=\'.\' read -ra ver2_parts <<< "$version2"
+    IFS='.' read -ra ver1_parts <<< "$version1"
+    IFS='.' read -ra ver2_parts <<< "$version2"
 
     for i in {0..2}; do
         local v1=${ver1_parts[i]:-0}
@@ -589,7 +601,7 @@ download_binary() {
     if [[ -n "$CHECKSUM_URL" ]]; then
         log_debug "Downloading checksum from: $CHECKSUM_URL"
         if curl "${curl_opts[@]}" "$CHECKSUM_URL" -o "$temp_checksum" 2>/dev/null; then
-            expected_checksum=$(cut -d\' \' -f1 < "$temp_checksum")
+            expected_checksum=$(cut -d' ' -f1 < "$temp_checksum")
             log_debug "Expected checksum: $expected_checksum"
         else
             log_warning "Failed to download checksum file"
