@@ -43,6 +43,8 @@ readonly TEMP_DIR="/tmp/picovis-install-$$"
 INSTALL_VERSION="latest"
 INSTALL_PREFIX="$INSTALL_DIR_DEFAULT"
 FORCE_INSTALL=false
+DRY_RUN=false
+NON_INTERACTIVE=false
 DETECTED_OS=""
 DETECTED_ARCH=""
 BINARY_FILENAME=""
@@ -96,6 +98,10 @@ ${BOLD}OPTIONS:${NC}
 
     --force              Force reinstallation even if already installed
 
+    --dry-run            Show what would be done without actually doing it
+
+    --non-interactive    Run without prompting for user input
+
     --help               Show this help message
 
 ${BOLD}EXAMPLES:${NC}
@@ -110,6 +116,9 @@ ${BOLD}EXAMPLES:${NC}
 
     # Force reinstall
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --force
+
+    # Dry run (preview actions)
+    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --dry-run
 
 ${BOLD}TROUBLESHOOTING:${NC}
     If you encounter GitHub API rate limiting (403 errors), try:
@@ -210,6 +219,13 @@ get_download_url() {
 download_binary() {
     log_progress "Downloading Picovis CLI binary..."
 
+    if [[ "$DRY_RUN" == true ]]; then
+        log_info "[DRY RUN] Would download from: $DOWNLOAD_URL"
+        log_info "[DRY RUN] Would save to: $TEMP_DIR/$BINARY_FILENAME"
+        echo "/tmp/fake-binary-for-dry-run"
+        return 0
+    fi
+
     # Create temporary directory
     mkdir -p "$TEMP_DIR"
     local temp_binary="$TEMP_DIR/$BINARY_FILENAME"
@@ -256,6 +272,13 @@ install_binary() {
 
     log_progress "Installing Picovis CLI to $install_path..."
 
+    if [[ "$DRY_RUN" == true ]]; then
+        log_info "[DRY RUN] Would create directory: $install_dir"
+        log_info "[DRY RUN] Would install binary to: $install_path"
+        log_info "[DRY RUN] Would set permissions: 755"
+        return 0
+    fi
+
     # Create install directory if it doesn't exist
     if [[ ! -d "$install_dir" ]]; then
         log_info "Creating directory: $install_dir"
@@ -277,12 +300,18 @@ install_binary() {
         log_warning "Picovis CLI is already installed: $current_version"
         log_info "Use --force to reinstall or uninstall first"
 
-        # Ask user if they want to continue
-        echo -n "Do you want to continue with installation? [y/N]: " >&2
-        read -r response
-        if [[ ! "$response" =~ ^[Yy]$ ]]; then
-            log_info "Installation cancelled"
+        # Handle interactive vs non-interactive mode
+        if [[ "$NON_INTERACTIVE" == true ]] || [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+            log_info "Non-interactive mode: skipping installation"
             exit 0
+        else
+            # Ask user if they want to continue
+            echo -n "Do you want to continue with installation? [y/N]: " >&2
+            read -r response
+            if [[ ! "$response" =~ ^[Yy]$ ]]; then
+                log_info "Installation cancelled"
+                exit 0
+            fi
         fi
     fi
 
@@ -309,6 +338,14 @@ verify_installation() {
     local install_path="$INSTALL_PREFIX/bin/$BINARY_NAME"
 
     log_progress "Verifying installation..."
+
+    if [[ "$DRY_RUN" == true ]]; then
+        log_info "[DRY RUN] Would verify binary exists at: $install_path"
+        log_info "[DRY RUN] Would check binary is executable"
+        log_info "[DRY RUN] Would test binary execution"
+        log_success "[DRY RUN] Installation verification would complete successfully"
+        return 0
+    fi
 
     # Check if binary exists and is executable
     if [[ ! -f "$install_path" ]]; then
@@ -370,6 +407,14 @@ parse_args() {
             FORCE_INSTALL=true
             shift
             ;;
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --non-interactive)
+            NON_INTERACTIVE=true
+            shift
+            ;;
         --help)
             show_help
             exit 0
@@ -388,6 +433,11 @@ main() {
     # Set up cleanup trap
     trap cleanup EXIT
 
+    # Auto-detect CI environments and enable non-interactive mode
+    if [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]] || [[ -n "${TRAVIS:-}" ]] || [[ -n "${CIRCLECI:-}" ]] || [[ -n "${JENKINS_URL:-}" ]]; then
+        NON_INTERACTIVE=true
+    fi
+
     # Show header
     log_header "Picovis CLI Installation"
     echo >&2
@@ -404,6 +454,12 @@ main() {
     # Show installation info
     log_info "Installation version: $INSTALL_VERSION"
     log_info "Installation prefix: $INSTALL_PREFIX"
+    if [[ "$DRY_RUN" == true ]]; then
+        log_info "Mode: DRY RUN (no actual changes will be made)"
+    fi
+    if [[ "$NON_INTERACTIVE" == true ]] || [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+        log_info "Mode: NON-INTERACTIVE"
+    fi
     echo >&2
 
     # Run installation steps
@@ -417,10 +473,17 @@ main() {
 
     # Success message
     echo >&2
-    log_header "Installation Complete! 🎉"
-    echo >&2
-    log_success "Picovis CLI has been successfully installed"
-    log_info "Run 'picovis --help' to get started"
+    if [[ "$DRY_RUN" == true ]]; then
+        log_header "Dry Run Complete! 🎉"
+        echo >&2
+        log_success "All installation steps would complete successfully"
+        log_info "Run without --dry-run to perform actual installation"
+    else
+        log_header "Installation Complete! 🎉"
+        echo >&2
+        log_success "Picovis CLI has been successfully installed"
+        log_info "Run 'picovis --help' to get started"
+    fi
     log_info "Visit https://github.com/picovis/picovis-community for documentation"
     echo >&2
 }
