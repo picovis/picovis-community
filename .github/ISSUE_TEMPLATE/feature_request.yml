@@ -1,0 +1,198 @@
+name: 💡 Feature Request
+description: Suggest a new feature or enhancement for Picovis CLI
+title: "[Feature]: "
+labels: ["enhancement", "feature-request"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 💡 Feature Request
+        
+        We love hearing your ideas for making Picovis CLI even better! 
+        
+        **Before submitting**, please:
+        - [ ] Search [existing issues](https://github.com/picovis/picovis-community/issues) and [discussions](https://github.com/picovis/picovis-community/discussions) to avoid duplicates
+        - [ ] Consider if this might be better suited for a [discussion](https://github.com/picovis/picovis-community/discussions/categories/ideas) first
+        - [ ] Think about how this feature would benefit the broader community
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 🎯 Feature Summary
+      description: A clear and concise description of the feature you'd like to see
+      placeholder: "I would like Picovis CLI to support..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 🤔 Problem Statement
+      description: What problem does this feature solve? What's the current pain point?
+      placeholder: |
+        Currently, when I try to..., I have to...
+        This is frustrating because...
+        It would be much better if...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: Describe the solution you'd like to see implemented
+      placeholder: |
+        I propose adding a new command/feature that...
+        
+        Example usage:
+        ```bash
+        picovis new-feature --option value
+        ```
+        
+        This would work by...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternative Solutions
+      description: Have you considered any alternative approaches or workarounds?
+      placeholder: |
+        Alternative 1: ...
+        Alternative 2: ...
+        
+        Current workaround: ...
+        Why the proposed solution is better: ...
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 📂 Feature Category
+      description: What category does this feature fall into?
+      options:
+        - AI & Analytics
+        - Database Connectivity
+        - Query & Data Operations
+        - Performance & Monitoring
+        - User Interface & Experience
+        - Configuration & Setup
+        - Security & Authentication
+        - Import/Export & Migration
+        - Documentation & Help
+        - Developer Tools & API
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🚨 Priority Level
+      description: How important is this feature to you and your workflow?
+      options:
+        - Low - Nice to have, would be convenient
+        - Medium - Would significantly improve my workflow
+        - High - Essential for my use case, currently blocking
+        - Critical - Cannot use Picovis effectively without this
+    validations:
+      required: true
+
+  - type: dropdown
+    id: users
+    attributes:
+      label: 👥 Target Users
+      description: Who would benefit most from this feature?
+      options:
+        - Database Administrators
+        - Software Developers
+        - Data Analysts
+        - DevOps Engineers
+        - Data Scientists
+        - System Administrators
+        - All users
+        - Other (specify in additional context)
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 🎯 Use Cases
+      description: Provide specific examples of how this feature would be used
+      placeholder: |
+        Use Case 1: As a DBA, I want to... so that I can...
+        Use Case 2: As a developer, I need to... because...
+        Use Case 3: When working with large datasets, I would...
+    validations:
+      required: true
+
+  - type: textarea
+    id: mockup
+    attributes:
+      label: 🎨 Mockup / Example
+      description: |
+        Show us what this feature might look like! 
+        This could be command examples, UI mockups, or expected output.
+      render: bash
+      placeholder: |
+        # Example command usage:
+        picovis new-feature --help
+        
+        # Expected output:
+        Usage: picovis new-feature [OPTIONS]
+        
+        Options:
+          --option1    Description of option 1
+          --option2    Description of option 2
+        
+        # Example workflow:
+        picovis new-feature --option1 value1
+        # Output: Feature executed successfully!
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: 🛠️ Implementation Considerations
+      description: Have you thought about any of these aspects?
+      options:
+        - label: This feature should work across all supported databases
+        - label: This feature should be backward compatible
+        - label: This feature might need new configuration options
+        - label: This feature could impact performance
+        - label: This feature might need additional documentation
+        - label: I would be willing to help test this feature
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 📎 Additional Context
+      description: |
+        Any other context, screenshots, links, or examples that would help us understand your request better.
+      placeholder: |
+        Links to similar features in other tools:
+        - Tool X has a similar feature: [link]
+        
+        Related discussions or issues:
+        - #123
+        - Discussion link
+        
+        Additional thoughts:
+        - This could also enable...
+        - Consider integration with...
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Pre-submission Checklist
+      description: Please confirm you have completed these steps
+      options:
+        - label: I have searched for existing feature requests and this is not a duplicate
+          required: true
+        - label: I have considered if this should be a discussion first
+          required: true
+        - label: I have provided clear use cases and examples
+          required: true
+        - label: I believe this feature would benefit the broader community
+          required: true

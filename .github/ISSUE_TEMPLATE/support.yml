@@ -1,0 +1,115 @@
+name: 🆘 Support Request
+description: Get help with installation, configuration, or usage issues
+title: "[Support]: "
+labels: ["support", "question"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 🆘 Support Request
+        
+        Need help with Picovis CLI? We're here to assist!
+        
+        **💡 Tip**: For faster community-driven support, consider posting in our [Q&A Discussions](https://github.com/picovis/picovis-community/discussions/categories/q-a) instead.
+        
+        **Before submitting**, please:
+        - [ ] Check our [documentation](https://github.com/picovis/picovis-community/wiki)
+        - [ ] Search [existing issues](https://github.com/picovis/picovis-community/issues) and [discussions](https://github.com/picovis/picovis-community/discussions)
+        - [ ] Try the troubleshooting steps in our [guide](https://github.com/picovis/picovis-community/wiki/Troubleshooting)
+
+  - type: input
+    id: version
+    attributes:
+      label: 📋 Picovis CLI Version
+      description: What version are you using?
+      placeholder: "e.g., v1.2.3 (run `picovis --version`)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 🏷️ Support Category
+      description: What do you need help with?
+      options:
+        - Installation & Setup
+        - Database Connection Issues
+        - Configuration Problems
+        - Command Usage & Syntax
+        - Performance Issues
+        - Error Understanding
+        - Feature Questions
+        - Best Practices
+        - Migration & Import/Export
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: ❓ Your Question
+      description: What specifically do you need help with?
+      placeholder: "I'm trying to... but I'm getting..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 🌍 Context & Environment
+      description: Provide context about your setup and what you're trying to achieve
+      placeholder: |
+        - Operating System: 
+        - Database Type: 
+        - What I'm trying to do: 
+        - What I've already tried:
+        - Expected outcome:
+    validations:
+      required: true
+
+  - type: textarea
+    id: commands
+    attributes:
+      label: 💻 Commands Used
+      description: What commands did you run? (remove sensitive information)
+      render: shell
+      placeholder: |
+        picovis command1 --option value
+        picovis command2
+
+  - type: textarea
+    id: error
+    attributes:
+      label: ❌ Error Messages
+      description: If you're getting errors, paste them here (remove sensitive data)
+      render: shell
+      placeholder: |
+        Error: Something went wrong...
+        
+        You can also run with verbose logging:
+        picovis --verbose [your-command]
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: 🚨 Urgency Level
+      description: How urgent is this for you?
+      options:
+        - Low - I can work around this
+        - Medium - This is affecting my productivity
+        - High - This is blocking important work
+        - Critical - This is blocking critical operations
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 📎 Additional Information
+      description: Any other details that might help us assist you better
+      placeholder: |
+        Screenshots, configuration files, or any other relevant information...
+        
+        Remember to remove sensitive information like passwords or API keys!

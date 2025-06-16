@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 🚀 Picovis CLI Universal Installation Script
+# 🚀 Picovis CLI Universal Installation Script (Improved)
 #
 # This script automatically detects your operating system and architecture,
 # downloads the appropriate Picovis CLI binary from GitHub releases, and
@@ -78,6 +78,10 @@ show_help() {
     cat <<EOF
 ${BOLD}Picovis CLI Installation Script${NC}
 
+${BOLD}DESCRIPTION:${NC}
+    Automatically downloads and installs the latest Picovis CLI binary
+    for your operating system and architecture.
+
 ${BOLD}USAGE:${NC}
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- [OPTIONS]
@@ -95,19 +99,22 @@ ${BOLD}OPTIONS:${NC}
     --help               Show this help message
 
 ${BOLD}EXAMPLES:${NC}
-    # Install latest version to /usr/local/bin
+    # Install latest version to default location
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash
 
     # Install specific version
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --version=v1.2.3
 
-    # Install to custom directory
-    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --prefix=\$HOME/.local
+    # Install to custom location
+    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --prefix=/opt/picovis
 
-${BOLD}SUPPORTED PLATFORMS:${NC}
-    • Linux x64
-    • macOS x64 (Intel)
-    • macOS ARM64 (Apple Silicon)
+    # Force reinstall
+    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --force
+
+${BOLD}REQUIREMENTS:${NC}
+    - curl
+    - Linux or macOS
+    - x86_64 architecture (ARM64 supported on macOS only)
 
 For more information, visit: https://github.com/picovis/picovis-community
 EOF
@@ -216,7 +223,7 @@ download_binary() {
     echo "$temp_binary"
 }
 
-# 🔧 Install binary
+# 🔧 Install binary (improved version detection)
 install_binary() {
     local temp_binary="$1"
     local install_dir="$INSTALL_PREFIX/bin"
@@ -236,10 +243,12 @@ install_binary() {
         fi
     fi
 
-    # Check if already installed and not forcing
+    # Check if already installed and not forcing (IMPROVED VERSION DETECTION)
     if [[ -f "$install_path" ]] && [[ "$FORCE_INSTALL" == false ]]; then
         local current_version
-        current_version=$("$install_path" --version 2>/dev/null | head -n1 || echo "unknown")
+        if ! current_version=$("$install_path" --version 2>/dev/null | head -n1); then
+            current_version="(version check failed - binary may be corrupted)"
+        fi
         log_warning "Picovis CLI is already installed: $current_version"
         log_info "Use --force to reinstall or uninstall first"
 

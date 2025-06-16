@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🙏 Ask a Question
+    url: https://github.com/picovis/picovis-community/discussions/categories/q-a
+    about: Get help with installation, configuration, or usage questions
+  - name: 💡 Share an Idea
+    url: https://github.com/picovis/picovis-community/discussions/categories/ideas
+    about: Discuss feature ideas and suggestions with the community
+  - name: 🙌 Show and Tell
+    url: https://github.com/picovis/picovis-community/discussions/categories/show-and-tell
+    about: Share your projects, success stories, and tutorials
+  - name: 💬 General Discussion
+    url: https://github.com/picovis/picovis-community/discussions/categories/general
+    about: General discussions about databases, AI, and community topics
+  - name: 📚 Documentation
+    url: https://github.com/picovis/picovis-community/wiki
+    about: Check our comprehensive documentation and guides
+  - name: 🔧 Troubleshooting Guide
+    url: https://github.com/picovis/picovis-community/wiki/Troubleshooting
+    about: Common issues and solutions
