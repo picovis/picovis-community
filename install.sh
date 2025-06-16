@@ -102,14 +102,20 @@ ${BOLD}EXAMPLES:${NC}
     # Install latest version to default location
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash
 
-    # Install specific version
-    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --version=v1.2.3
+    # Install specific version (recommended if API fails)
+    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --version=v1.2.4
 
     # Install to custom location
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --prefix=/opt/picovis
 
     # Force reinstall
     curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --force
+
+${BOLD}TROUBLESHOOTING:${NC}
+    If you encounter GitHub API rate limiting (403 errors), try:
+    - Specifying a version explicitly: --version=v1.2.4
+    - Waiting a few minutes and trying again
+    - Downloading manually from: https://github.com/picovis/picovis-community/releases
 
 ${BOLD}REQUIREMENTS:${NC}
     - curl
@@ -170,17 +176,28 @@ get_download_url() {
 
     if [[ "$INSTALL_VERSION" == "latest" ]]; then
         log_info "Fetching latest release information..."
-        local latest_release
-        latest_release=$(curl -fsSL "https://api.github.com/repos/${GITHUB_REPO}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        local latest_release=""
+        local api_response
 
-        if [[ -z "$latest_release" ]]; then
-            log_error "Failed to fetch latest release information"
-            log_info "Please specify a version manually with --version=vX.Y.Z"
-            exit 1
+        # Try to fetch latest release with better error handling
+        if api_response=$(curl -fsSL "https://api.github.com/repos/${GITHUB_REPO}/releases/latest" 2>/dev/null); then
+            latest_release=$(echo "$api_response" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         fi
 
-        INSTALL_VERSION="$latest_release"
-        log_success "Latest version: $INSTALL_VERSION"
+        if [[ -z "$latest_release" ]]; then
+            log_warning "Failed to fetch latest release information from GitHub API"
+            log_info "This might be due to GitHub API rate limiting or network issues"
+            log_info "Falling back to known latest version: v1.2.4"
+            log_info "To install a specific version, use: --version=vX.Y.Z"
+            log_info "Available versions can be found at: https://github.com/${GITHUB_REPO}/releases"
+
+            # Fallback to known latest version
+            INSTALL_VERSION="v1.2.4"
+            log_warning "Using fallback version: $INSTALL_VERSION"
+        else
+            INSTALL_VERSION="$latest_release"
+            log_success "Latest version: $INSTALL_VERSION"
+        fi
     fi
 
     # Construct binary filename with version suffix to match actual asset names
@@ -201,7 +218,15 @@ download_binary() {
     if command -v curl >/dev/null 2>&1; then
         if ! curl -fL --progress-bar "$DOWNLOAD_URL" -o "$temp_binary"; then
             log_error "Failed to download binary from $DOWNLOAD_URL"
-            log_info "Please check if the version exists and try again"
+            log_info "This could be due to:"
+            log_info "  • Network connectivity issues"
+            log_info "  • Invalid version specified"
+            log_info "  • GitHub server issues"
+            log_info ""
+            log_info "Alternative installation methods:"
+            log_info "  1. Try a specific version: --version=v1.2.4"
+            log_info "  2. Download manually from: https://github.com/${GITHUB_REPO}/releases"
+            log_info "  3. Check available versions at: https://github.com/${GITHUB_REPO}/releases"
             exit 1
         fi
     else
