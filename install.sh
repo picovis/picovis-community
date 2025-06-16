@@ -74,6 +74,7 @@ VERIFY_SIGNATURE=false
 PROXY_URL=""
 OFFLINE_PATH=""
 UNINSTALL=false
+NON_INTERACTIVE=false
 DETECTED_OS=""
 DETECTED_ARCH=""
 BINARY_FILENAME=""
@@ -288,6 +289,7 @@ ${BOLD}ADVANCED OPTIONS:${NC}
     --proxy=URL           Use HTTP proxy for downloads
     --offline=PATH        Install from local binary file
     --uninstall           Uninstall Picovis CLI
+    --non-interactive     Run without prompting for user input
 
 ${BOLD}BASIC EXAMPLES:${NC}
     # Install latest version to default location
@@ -324,6 +326,9 @@ ${BOLD}SECURITY FEATURES:${NC}
     • Input validation and sanitization
     • Secure temporary file handling
     • Network connectivity validation
+
+    # Dry run (preview actions)
+    curl -fsSL https://raw.githubusercontent.com/picovis/picovis-community/main/install.sh | bash -s -- --dry-run
 
 ${BOLD}TROUBLESHOOTING:${NC}
     If you encounter GitHub API rate limiting (403 errors), try:
@@ -567,6 +572,13 @@ download_binary() {
 
     log_progress "Downloading Picovis CLI binary..."
 
+    if [[ "$DRY_RUN" == true ]]; then
+        log_info "[DRY RUN] Would download from: $DOWNLOAD_URL"
+        log_info "[DRY RUN] Would save to: $TEMP_DIR/$BINARY_FILENAME"
+        echo "/tmp/fake-binary-for-dry-run"
+        return 0
+    fi
+
     # Create temporary directory
     mkdir -p "$TEMP_DIR"
     local temp_binary="$TEMP_DIR/$BINARY_FILENAME"
@@ -673,17 +685,18 @@ install_binary() {
         log_warning "Picovis CLI is already installed: $current_version"
         log_info "Use --force to reinstall or uninstall first"
 
-        # Ask user if they want to continue (skip in non-interactive mode)
-        if [[ -t 0 ]]; then
+        # Handle interactive vs non-interactive mode
+        if [[ "$NON_INTERACTIVE" == true ]] || [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+            log_info "Non-interactive mode: skipping installation"
+            exit 0
+        else
+            # Ask user if they want to continue
             echo -n "Do you want to continue with installation? [y/N]: " >&2
             read -r response
             if [[ ! "$response" =~ ^[Yy]$ ]]; then
                 log_info "Installation cancelled"
                 exit 0
             fi
-        else
-            log_info "Non-interactive mode: skipping installation"
-            exit 0
         fi
     fi
 
@@ -710,6 +723,14 @@ verify_installation() {
     local install_path="$INSTALL_PREFIX/bin/$BINARY_NAME"
 
     log_progress "Verifying installation..."
+
+    if [[ "$DRY_RUN" == true ]]; then
+        log_info "[DRY RUN] Would verify binary exists at: $install_path"
+        log_info "[DRY RUN] Would check binary is executable"
+        log_info "[DRY RUN] Would test binary execution"
+        log_success "[DRY RUN] Installation verification would complete successfully"
+        return 0
+    fi
 
     # Check if binary exists and is executable
     if [[ ! -f "$install_path" ]]; then
@@ -866,6 +887,10 @@ parse_args() {
             UNINSTALL=true
             shift
             ;;
+        --non-interactive)
+            NON_INTERACTIVE=true
+            shift
+            ;;
         --help)
             show_help
             exit 0
@@ -893,6 +918,11 @@ parse_args() {
 main() {
     # Set up cleanup trap
     trap cleanup EXIT
+
+    # Auto-detect CI environments and enable non-interactive mode
+    if [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]] || [[ -n "${TRAVIS:-}" ]] || [[ -n "${CIRCLECI:-}" ]] || [[ -n "${JENKINS_URL:-}" ]]; then
+        NON_INTERACTIVE=true
+    fi
 
     # Create temporary directory for logging and downloads
     mkdir -p "$TEMP_DIR"
@@ -922,6 +952,9 @@ main() {
     if [[ "$VERBOSE" == true ]]; then
         log_info "Verbose logging enabled"
         log_info "Installation ID: $INSTALLATION_ID"
+    fi
+    if [[ "$NON_INTERACTIVE" == true ]] || [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+        log_info "Mode: NON-INTERACTIVE"
     fi
     echo >&2
 
@@ -966,21 +999,21 @@ main() {
     # Success message
     echo >&2
     if [[ "$DRY_RUN" == true ]]; then
-        log_header "Dry Run Complete! 🔍"
+        log_header "Dry Run Complete! 🎉"
         echo >&2
-        log_success "All checks passed - installation would succeed"
+        log_success "All installation steps would complete successfully"
         log_info "Run without --dry-run to perform actual installation"
     else
         log_header "Installation Complete! 🎉"
         echo >&2
         log_success "Picovis CLI has been successfully installed"
         log_info "Run 'picovis --help' to get started"
-        log_info "Visit https://github.com/picovis/picovis-community for documentation"
 
         if [[ "$VERBOSE" == true ]]; then
             log_info "Installation log saved to: $TEMP_DIR/install.log"
         fi
     fi
+    log_info "Visit https://github.com/picovis/picovis-community for documentation"
     echo >&2
 }
 
