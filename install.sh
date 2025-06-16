@@ -59,6 +59,8 @@ readonly MAX_RETRIES=3
 readonly RETRY_DELAY=2
 
 # 🔒 Security Configuration
+# shellcheck disable=SC2034  # GPG_KEY_ID reserved for future GPG signature verification
+# shellcheck disable=SC2034  # GPG_KEY_ID reserved for future GPG signature verification
 readonly GPG_KEY_ID="YOUR_GPG_KEY_ID" # Replace with actual GPG key ID
 readonly CHECKSUM_URL_SUFFIX=".sha256"
 
@@ -394,8 +396,8 @@ version_compare() {
 
     # Simple version comparison (assumes semantic versioning)
     local IFS='.'
-    local ver1_parts=($version1)
-    local ver2_parts=($version2)
+    IFS=\'.\' read -ra ver1_parts <<< "$version1"
+    IFS=\'.\' read -ra ver2_parts <<< "$version2"
 
     for i in {0..2}; do
         local v1=${ver1_parts[i]:-0}
@@ -587,7 +589,7 @@ download_binary() {
     if [[ -n "$CHECKSUM_URL" ]]; then
         log_debug "Downloading checksum from: $CHECKSUM_URL"
         if curl "${curl_opts[@]}" "$CHECKSUM_URL" -o "$temp_checksum" 2>/dev/null; then
-            expected_checksum=$(cat "$temp_checksum" | cut -d' ' -f1)
+            expected_checksum=$(cut -d\' \' -f1 < "$temp_checksum")
             log_debug "Expected checksum: $expected_checksum"
         else
             log_warning "Failed to download checksum file"
