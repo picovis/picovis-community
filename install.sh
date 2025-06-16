@@ -431,8 +431,13 @@ check_system_requirements() {
     # Check available disk space (need at least 100MB)
     local available_space
     if command -v df >/dev/null 2>&1; then
-        available_space=$(df "$TEMP_DIR" 2>/dev/null | awk 'NR==2 {print $4}' || echo "0")
-        if [[ "$available_space" -lt 102400 ]]; then # 100MB in KB
+        # Use /tmp as fallback if TEMP_DIR doesn't exist yet
+        local check_dir="$TEMP_DIR"
+        if [[ ! -d "$check_dir" ]]; then
+            check_dir="/tmp"
+        fi
+        available_space=$(df "$check_dir" 2>/dev/null | awk 'NR==2 {print $4}' || echo "0")
+        if [[ "$available_space" -gt 0 ]] && [[ "$available_space" -lt 102400 ]]; then # 100MB in KB
             log_warning "Low disk space detected. Available: ${available_space}KB"
             log_info "At least 100MB of free space is recommended"
         fi
