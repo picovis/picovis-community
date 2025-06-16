@@ -19,8 +19,10 @@ readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[1;33m'
 readonly BLUE='\033[0;34m'
+# shellcheck disable=SC2034  # Color variables may be used in future
 readonly PURPLE='\033[0;35m'
 readonly CYAN='\033[0;36m'
+# shellcheck disable=SC2034  # Color variables may be used in future
 readonly WHITE='\033[1;37m'
 readonly NC='\033[0m'
 readonly BOLD='\033[1m'
@@ -51,6 +53,7 @@ test_fail() {
     ((TESTS_FAILED++))
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_warning() {
     echo -e "${YELLOW}[WARN]${NC} $1" >&2
 }
@@ -78,16 +81,19 @@ run_test() {
     fi
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via trap
 cleanup_test() {
     rm -rf "$TEST_PREFIX" 2>/dev/null || true
 }
 
 # 🧪 Test functions
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_script_syntax() {
     bash -n "$SCRIPT_PATH"
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_shellcheck_compliance() {
     if command -v shellcheck >/dev/null 2>&1; then
         shellcheck "$SCRIPT_PATH"
@@ -97,63 +103,77 @@ test_shellcheck_compliance() {
     fi
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_help_option() {
     "$SCRIPT_PATH" --help >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_dry_run_mode() {
     "$SCRIPT_PATH" --dry-run --prefix="$TEST_PREFIX" >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_invalid_version() {
     ! "$SCRIPT_PATH" --version="invalid.version" --dry-run 2>/dev/null
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_invalid_prefix() {
     ! "$SCRIPT_PATH" --prefix="/invalid|path" --dry-run 2>/dev/null
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_invalid_proxy() {
     ! "$SCRIPT_PATH" --proxy="not-a-url" --dry-run 2>/dev/null
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_verbose_mode() {
     "$SCRIPT_PATH" --verbose --dry-run --prefix="$TEST_PREFIX" >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_uninstall_dry_run() {
     "$SCRIPT_PATH" --uninstall --dry-run --prefix="$TEST_PREFIX" >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_offline_nonexistent_file() {
     ! "$SCRIPT_PATH" --offline="/nonexistent/file" --dry-run 2>/dev/null
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_mutually_exclusive_options() {
     ! "$SCRIPT_PATH" --uninstall --offline="/tmp/fake" --dry-run 2>/dev/null
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_version_validation() {
     "$SCRIPT_PATH" --version="v1.2.3" --dry-run --prefix="$TEST_PREFIX" >/dev/null 2>&1 &&
         "$SCRIPT_PATH" --version="v1.2.3-beta" --dry-run --prefix="$TEST_PREFIX" >/dev/null 2>&1 &&
         "$SCRIPT_PATH" --version="latest" --dry-run --prefix="$TEST_PREFIX" >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_platform_detection() {
     # Test that platform detection doesn't fail
     bash -c 'source '"$SCRIPT_PATH"'; detect_platform' >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_dependency_checking() {
     # Test dependency checking function
     bash -c 'source '"$SCRIPT_PATH"'; check_dependencies' >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_network_connectivity() {
     # Test network connectivity check
     bash -c 'source '"$SCRIPT_PATH"'; check_network_connectivity' >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_input_validation() {
     # Test input validation functions
     bash -c 'source '"$SCRIPT_PATH"'; validate_input "v1.2.3" "version"' &&
@@ -161,11 +181,13 @@ test_input_validation() {
         bash -c 'source '"$SCRIPT_PATH"'; validate_input "https://example.com" "url"'
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_logging_functions() {
     # Test that logging functions don't crash
     bash -c 'source '"$SCRIPT_PATH"'; log_info "test"; log_success "test"; log_warning "test"; log_error "test"' >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2317  # Function called indirectly via run_test
 test_retry_mechanism() {
     # Test retry with backoff function
     bash -c 'source '"$SCRIPT_PATH"'; retry_with_backoff 2 1 true' >/dev/null 2>&1 &&
