@@ -45,12 +45,12 @@ test_log() {
 
 test_success() {
     echo -e "${GREEN}[PASS]${NC} $1" >&2
-    ((TESTS_PASSED++))
+    TESTS_PASSED=$((TESTS_PASSED + 1))
 }
 
 test_fail() {
     echo -e "${RED}[FAIL]${NC} $1" >&2
-    ((TESTS_FAILED++))
+    TESTS_FAILED=$((TESTS_FAILED + 1))
 }
 
 # shellcheck disable=SC2317  # Function called indirectly via run_test
@@ -71,7 +71,7 @@ run_test() {
         return 0
     fi
 
-    ((TESTS_RUN++))
+    TESTS_RUN=$((TESTS_RUN + 1))
     test_log "Running: $test_name"
 
     if $test_function; then
