@@ -408,8 +408,8 @@ version_compare() {
 
     # Simple version comparison (assumes semantic versioning)
     local IFS='.'
-    IFS='.' read -ra ver1_parts <<< "$version1"
-    IFS='.' read -ra ver2_parts <<< "$version2"
+    IFS='.' read -ra ver1_parts <<<"$version1"
+    IFS='.' read -ra ver2_parts <<<"$version2"
 
     for i in {0..2}; do
         local v1=${ver1_parts[i]:-0}
@@ -447,8 +447,9 @@ check_system_requirements() {
     # Check umask
     local current_umask
     current_umask=$(umask)
+    log_debug "Current umask: $current_umask (script set to 0077 for security)"
     if [[ "$current_umask" != "0077" ]]; then
-        log_debug "Current umask: $current_umask (script set to 0077 for security)"
+        log_warning "Umask is not set to secure value 0077"
     fi
 
     log_success "System requirements check completed"
@@ -601,7 +602,7 @@ download_binary() {
     if [[ -n "$CHECKSUM_URL" ]]; then
         log_debug "Downloading checksum from: $CHECKSUM_URL"
         if curl "${curl_opts[@]}" "$CHECKSUM_URL" -o "$temp_checksum" 2>/dev/null; then
-            expected_checksum=$(cut -d' ' -f1 < "$temp_checksum")
+            expected_checksum=$(cut -d' ' -f1 <"$temp_checksum")
             log_debug "Expected checksum: $expected_checksum"
         else
             log_warning "Failed to download checksum file"
@@ -885,6 +886,9 @@ parse_args() {
 main() {
     # Set up cleanup trap
     trap cleanup EXIT
+
+    # Create temporary directory for logging and downloads
+    mkdir -p "$TEMP_DIR"
 
     # Generate installation ID for tracking
     generate_installation_id
