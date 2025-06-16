@@ -394,9 +394,11 @@ check_dependencies() {
     fi
 
     # Report warnings
-    for warning in "${warnings[@]}"; do
-        log_warning "$warning"
-    done
+    if [[ ${#warnings[@]} -gt 0 ]]; then
+        for warning in "${warnings[@]}"; do
+            log_warning "$warning"
+        done
+    fi
 
     log_success "All required dependencies are available"
     return 0
