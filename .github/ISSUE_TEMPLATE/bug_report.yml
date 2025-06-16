@@ -1,0 +1,188 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with Picovis CLI
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 🐛 Bug Report
+        
+        Thanks for taking the time to report a bug! This helps us improve Picovis CLI for everyone.
+        
+        **Before submitting**, please:
+        - [ ] Search [existing issues](https://github.com/picovis/picovis-community/issues) to avoid duplicates
+        - [ ] Check our [troubleshooting guide](https://github.com/picovis/picovis-community/wiki/Troubleshooting)
+        - [ ] Ensure you're using the latest version of Picovis CLI
+        - [ ] Try reproducing the issue with minimal steps
+
+  - type: input
+    id: version
+    attributes:
+      label: 📋 Picovis CLI Version
+      description: What version of Picovis CLI are you running?
+      placeholder: "e.g., v1.2.3 (run `picovis --version`)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 💻 Operating System
+      description: What operating system are you using?
+      options:
+        - Linux (Ubuntu/Debian)
+        - Linux (CentOS/RHEL/Fedora)
+        - Linux (Arch/Manjaro)
+        - Linux (Other)
+        - macOS (Intel)
+        - macOS (Apple Silicon)
+        - Windows 10
+        - Windows 11
+        - Other (please specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: database
+    attributes:
+      label: 🗄️ Database Type
+      description: Which database are you connecting to? (if applicable)
+      options:
+        - PostgreSQL
+        - MySQL/MariaDB
+        - MongoDB
+        - SQLite
+        - Microsoft SQL Server
+        - Oracle Database
+        - Multiple databases
+        - Not applicable
+        - Other (please specify)
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 🔍 Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: |
+        Describe what happened and what you expected to happen.
+        
+        Example:
+        When I run `picovis db connect mydb`, I expect it to connect successfully, but instead I get an error message.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🔄 Steps to Reproduce
+      description: Detailed steps to reproduce the behavior
+      placeholder: |
+        1. Run command `picovis ...`
+        2. Enter configuration `...`
+        3. See error `...`
+        
+        Please be as specific as possible!
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "I expected the command to complete successfully and show..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: ❌ Actual Behavior
+      description: What actually happened?
+      placeholder: "Instead, I got an error message saying..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 📝 Error Messages / Logs
+      description: |
+        Please paste any error messages, logs, or output here.
+        **Important**: Remove any sensitive information like passwords, API keys, or personal data.
+      render: shell
+      placeholder: |
+        Paste error messages here...
+        
+        You can also run with verbose logging:
+        picovis --verbose [your-command]
+
+  - type: textarea
+    id: config
+    attributes:
+      label: ⚙️ Configuration
+      description: |
+        Please share relevant configuration (remove sensitive data!)
+        You can run `picovis config show` to see your current configuration.
+      render: yaml
+      placeholder: |
+        # Paste relevant configuration here
+        # Remember to remove sensitive information!
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 🌍 Environment Details
+      description: Additional environment information that might be relevant
+      placeholder: |
+        - Shell: bash/zsh/fish/powershell
+        - Terminal: Terminal.app/iTerm2/Windows Terminal/etc.
+        - Docker: Yes/No (if running in container)
+        - Network: Corporate/Home/VPN
+        - Any other relevant details...
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 🚨 Severity
+      description: How severe is this issue for you?
+      options:
+        - Low - Minor inconvenience, workaround available
+        - Medium - Affects functionality, but not blocking
+        - High - Blocking critical functionality
+        - Critical - Complete failure, no workaround
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Pre-submission Checklist
+      description: Please confirm you have completed these steps
+      options:
+        - label: I have searched for existing issues and this is not a duplicate
+          required: true
+        - label: I have checked the troubleshooting guide
+          required: true
+        - label: I am using the latest version of Picovis CLI
+          required: true
+        - label: I have removed all sensitive information from this report
+          required: true
+        - label: I have provided clear steps to reproduce the issue
+          required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 📎 Additional Context
+      description: |
+        Add any other context about the problem here.
+        Screenshots, videos, or additional files can be helpful!
+      placeholder: |
+        Any additional information that might help us understand and fix the issue...
+        
+        You can drag and drop images or files here.

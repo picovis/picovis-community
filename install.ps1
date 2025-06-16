@@ -233,7 +233,11 @@ function Install-Binary {
     if ((Test-Path $installPath) -and -not $Force) {
         try {
             $currentVersion = & $installPath --version 2>$null | Select-Object -First 1
-            Write-Warning "Picovis CLI is already installed: $currentVersion"
+            if ($currentVersion) {
+                Write-Warning "Picovis CLI is already installed: $currentVersion"
+            } else {
+                Write-Warning "Picovis CLI is already installed: (version check failed - binary may be corrupted)"
+            }
             Write-Info "Use -Force to reinstall"
             
             # Ask user if they want to continue
@@ -244,7 +248,7 @@ function Install-Binary {
             }
         }
         catch {
-            Write-Warning "Existing installation found but version check failed"
+            Write-Warning "Existing installation found but version check failed - binary may be corrupted"
         }
     }
     
